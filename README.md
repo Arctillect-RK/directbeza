@@ -1,93 +1,54 @@
-# ДиректБезАгенств — сайт
+# DirectBeza (ДиректБезАгенств)
 
-Лендинг + каталог готовых РК + заявки + **онлайн-оплата (ЮKassa)**.
+Платформа продажи **готовых рекламных кампаний Яндекс.Директ** + курс/комбайн: каталог, заявка, **оплата**, выдача доступа.
 
-```
-directbeza.ru/     ← на хост с PHP (Apache / Nginx+php-fpm)
-```
+**Live:** https://directbeza.ru/ · **ещё в проде**
 
-## Что залить на хост
+---
 
-```
-index.html
-catalog.html
-campaign.html
-rules.html
-success.php
-buy.php
-webhook.php
-admin.html          (можно не публиковать)
-css/
-js/
-img/
-includes/           ← config.php, yookassa-config.php, helpers.php
-data/campaigns.json
-data/payments.json  ← должен быть доступен на запись для PHP
-favicon.*
-```
+## Зачем проект
 
-**Не обязательно:** `server.js`, `package.json`, `node_modules` (это локальный Node-режим).
+Клиент выбирает готовую РК по нише (или оставляет заявку на сбор) → оплачивает → получает файлы/доступ.  
+Без «агентства на каждый чих»: самообслуживание + автоматизация выдачи.
 
-## Почты (заявки + уведомления)
+---
 
-В `js/config.js` и `includes/config.php`:
+## Стек и что за что отвечает
 
-- `zakaz@directbeza.ru` — заказы
-- `info@directbeza.ru` — общая / копия
+| Часть | Технологии | Зачем |
+|--------|------------|--------|
+| **Лендинг / каталог** | HTML5, CSS, JavaScript | Витрина: главная, каталог РК, карточка кампании, курс, SEO-комбайн, правила, FAQ |
+| **SEO** | `robots.txt`, `sitemap.xml`, Яндекс/Google verification, Метрика | Индексация и аналитика |
+| **Бэкенд (локальный API)** | **Node.js + Express** (`server.js`) | Локальный режим: каталог, сиды, API без PHP |
+| **Оплата** | **PHP** + **ЮKassa** (`buy.php`, `webhook.php`, `success.php`) | Создание платежа, webhook, return URL, выдача доступа |
+| **Конфиг** | PHP `includes/config.php`, `yookassa-config.php` (в публичном репо — placeholders) | Почты, TG, ключи магазина |
+| **Доступ после оплаты** | PHP `grant-access.php`, `learn.php`, токены | Разовая/ограниченная выдача материалов |
+| **Админка** | `admin.html` | Управление (локально/на хосте) |
+| **Данные** | JSON (`data/`), seed-скрипты | Каталог кампаний, лог платежей |
 
-Заявки уходят через **FormSubmit** на обе почты (`LEADS_EMAIL` + `_cc`).  
-Первая заявка — подтвердите FormSubmit письмом на `zakaz@…`.
-
-Оплаты: `mail()` на хостинге и/или FormSubmit-fallback; лог в `data/payments.json`.
-
-## ЮKassa (1 общий магазин)
-
-Ключи те же, что у magnit/bristol (`includes/yookassa-config.php`).
-
-В платеже всегда указан источник:
-- **description:** `[directbeza.ru] Готовая РК: …`
-- **metadata.product** = `directbeza`
-- **metadata.site** = `directbeza.ru`
-
-**HTTP-уведомления в кабинете ЮKassa** (один URL на весь магазин):
+### Поток
 
 ```
-https://www.magnit-test.ru/webhook.php
+Каталог / заявка → buy.php (ЮKassa) → webhook → grant access → Telegram/email уведомление
 ```
 
-Там webhook смотрит `metadata.product` / `site`:
-- `directbeza` → письмо на zakaz@ + info@directbeza.ru (+ TG админам)
-- иначе → magnit / bristol (токены)
+---
 
-Return URL после оплаты: `https://directbeza.ru/success.php` (файлы сайта).
+## Структура (кратко)
 
-Кнопка **«Оплатить картой»** на странице кампании (`campaign.html?id=…`).
-
-## Контакты на сайте
-
-Блок `#contacts` / footer: обе почты + Telegram (`TELEGRAM_USER` в config).
-
-## Локальный просмотр
-
-Статика:
-
-```bash
-npx --yes serve -l 3080
+```
+directbeza/
+  index.html, catalog.html, campaign.html   # витрина
+  buy.php, webhook.php, success.php         # оплата
+  includes/                                 # конфиг, helpers, ЮKassa
+  js/, css/, img/                           # фронт
+  server.js, package.json                   # Node-режим для локалки
 ```
 
-С Node API (без ЮKassa-PHP):
+---
 
-```bash
-npm start
-```
+## Author
 
-Оплата через `buy.php` нужна **на хостинге с PHP** (или настройте PHP локально).
+**Ruslan Kovalchuk** · [@Arctillect-RK](https://github.com/Arctillect-RK) · [Telegram](https://t.me/Arctillect)
 
-## Права на запись
-
-Папка `data/` — запись для веб-сервера (лог платежей):
-
-```bash
-chmod 775 data
-chmod 664 data/payments.json
-```
+Секреты (ЮKassa secret, токены) в репо **не** лежат — только placeholders / `.env.example`.
