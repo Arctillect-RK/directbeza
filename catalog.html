@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Каталог готовых кампаний | ДиректБезАгенств</title>
+  <meta name="description" content="Готовые рекламные кампании Яндекс.Директ по нишам: скачайте структуру, заголовки и семантику под вашу сферу." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+</head>
+<body class="page-catalog">
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Директ<span>БезАгенств</span></a>
+      <div class="nav-wrapper">
+        <nav class="nav" id="nav-menu">
+          <a href="index.html">Главная</a>
+          <a href="course.html">Курс</a>
+          <a href="seokombain.html">Комбайн</a>
+          <a href="catalog.html" class="nav-current">Готовые РК</a>
+          <a href="rules.html">Правила</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+        <button type="button" class="btn btn-header" onclick="openLeadModal()">Оставить заявку</button>
+        <button class="menu-toggle" id="mobile-menu-btn" type="button" aria-label="Меню">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="catalog-main">
+    <div class="container">
+      <div class="catalog-hero fade-up visible">
+        <p class="solutions-kicker">Готовые РК</p>
+        <h1>Каталог готовых кампаний</h1>
+        <p class="catalog-lead">
+          Готовые структуры для Яндекс.Директ по сферам: семантика, минуса, объявления.
+          Выбираете нишу → оставляете заявку → получаете файлы и инструкцию по загрузке.
+        </p>
+      </div>
+
+      <div class="catalog-filters fade-up visible">
+        <div class="filter-row">
+          <div class="filter-field grow">
+            <label for="filterQ">Поиск</label>
+            <div class="filter-input-wrap">
+              <span class="filter-input-icon" aria-hidden="true">⌕</span>
+              <input type="search" id="filterQ" placeholder="окна, ремонт, стоматология…" autocomplete="off" />
+            </div>
+          </div>
+          <div class="filter-field filter-field-sphere">
+            <label for="filterSphere">Сфера</label>
+            <select id="filterSphere">
+              <option value="">Все сферы</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="filterSort">Сортировка</label>
+            <select id="filterSort">
+              <option value="date_desc">Сначала новые</option>
+              <option value="date_asc">Сначала старые</option>
+              <option value="price_asc">Цена ↑</option>
+              <option value="price_desc">Цена ↓</option>
+              <option value="sphere">По сфере А–Я</option>
+              <option value="title">По названию</option>
+            </select>
+          </div>
+          <div class="filter-field filter-field-price">
+            <label for="filterMin">Цена от</label>
+            <input type="number" id="filterMin" min="0" step="100" placeholder="0" inputmode="numeric" />
+          </div>
+          <div class="filter-field filter-field-price">
+            <label for="filterMax">Цена до</label>
+            <input type="number" id="filterMax" min="0" step="100" placeholder="∞" inputmode="numeric" />
+          </div>
+          <div class="filter-field filter-actions">
+            <label class="filter-label-spacer" aria-hidden="true">&nbsp;</label>
+            <button type="button" class="btn" id="filterApply">Найти</button>
+          </div>
+        </div>
+
+        <div id="sphereChips" class="sphere-chips hidden" aria-label="Популярные сферы"></div>
+
+        <div id="filterActiveBar" class="filter-active-bar hidden">
+          <div id="filterActiveTags" class="filter-active-tags"></div>
+        </div>
+
+        <div class="filter-meta">
+          <span id="catalogCount">Загрузка…</span>
+          <button type="button" class="link-btn filter-reset-btn" id="filterReset" disabled>Сбросить фильтры</button>
+        </div>
+      </div>
+
+      <div id="catalogError" class="error-banner hidden"></div>
+      <div id="catalogGrid" class="catalog-grid"></div>
+      <div id="catalogEmpty" class="catalog-empty hidden">
+        <p>Пока ничего не найдено. Попробуйте другой запрос или <button type="button" class="link-btn" onclick="openLeadModal()">оставьте заявку на сбор под вашу нишу</button>.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer id="contacts" class="site-footer">
+    <div class="container">
+      <h3 class="site-footer-title">Контакты</h3>
+      <div class="site-footer-grid">
+        <div class="site-footer-card">
+          <div class="site-footer-label">Заказы</div>
+          <a href="mailto:zakaz@directbeza.ru">zakaz@directbeza.ru</a>
+        </div>
+        <div class="site-footer-card">
+          <div class="site-footer-label">Info</div>
+          <a href="mailto:info@directbeza.ru">info@directbeza.ru</a>
+        </div>
+        <div class="site-footer-card">
+          <div class="site-footer-label">Telegram</div>
+          <a href="https://t.me/devgweb" data-tg-link target="_blank" rel="noopener">@devgweb</a>
+        </div>
+      </div>
+      <p style="margin-top:20px;">
+        <a href="rules.html">Правила оплаты</a> · <a href="index.html">На главную</a>
+      </p>
+      <p class="site-footer-copy">© 2026 ДиректБезАгенств</p>
+    </div>
+  </footer>
+
+  <!-- Заявка на готовую / сбор -->
+  <div class="modal-overlay" id="lead-modal-overlay">
+    <div class="modal-content modal-wide">
+      <button class="modal-close" type="button" onclick="closeLeadModal()">×</button>
+      <h3 id="lead-modal-title">Оставить заявку</h3>
+      <p id="lead-modal-sub" style="color:#666;margin:0 0 8px;">Сбор кампании под ваш бизнес</p>
+      <form class="modal-form" id="leadForm">
+        <input type="hidden" id="leadType" value="custom_campaign" />
+        <input type="hidden" id="leadCampaignId" value="" />
+        <input type="hidden" id="leadCampaignTitle" value="" />
+
+        <div id="leadCampaignInfo" class="lead-campaign-chip hidden"></div>
+
+        <label class="form-label">Ссылка на сайт</label>
+        <input type="url" id="leadWebsite" placeholder="https://example.ru" />
+
+        <label class="form-label">Что продвигаем? (если несколько товаров/услуг)</label>
+        <textarea id="leadPromote" rows="2" placeholder="Например: только душевые перегородки, не двери"></textarea>
+
+        <label class="form-label">Город / регион</label>
+        <input type="text" id="leadCity" placeholder="Москва и область" />
+
+        <label class="form-label">Имя *</label>
+        <input type="text" id="leadName" required placeholder="Как к вам обращаться" />
+
+        <label class="form-label">Телефон *</label>
+        <input type="tel" id="leadPhone" required placeholder="+7 …" />
+
+        <label class="form-label">Почта *</label>
+        <input type="email" id="leadEmail" required placeholder="email@domain.ru" />
+
+        <p id="leadFormError" class="form-error hidden"></p>
+        <p id="leadFormOk" class="form-ok hidden"></p>
+        <button type="submit" class="btn" style="width:100%;" id="leadSubmitBtn">Отправить заявку</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь с <a href="rules.html" target="_blank">правилами</a> оказания услуги.</p>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/catalog-data.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/catalog.js"></script>
+</body>
+</html>

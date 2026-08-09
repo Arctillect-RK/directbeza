@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Host: www.directbeza.ru
+Sitemap: https://directbeza.ru/sitemap.xml

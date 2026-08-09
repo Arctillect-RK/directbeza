@@ -1,0 +1,18 @@
+{
+  "name": "directbeza",
+  "version": "1.0.0",
+  "description": "ДиректБезАгенств — заявки и каталог готовых кампаний",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^2.0.1"
+  },
+  "private": true
+}

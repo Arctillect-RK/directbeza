@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Как добавить кампанию | ДиректБезАгенств</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+</head>
+<body class="page-admin">
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Директ<span>БезАгенств</span></a>
+      <a href="catalog.html" class="btn btn-header">Каталог</a>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="container rules-wrap">
+      <p class="solutions-kicker">Для владельца сайта</p>
+      <h1>Как пополнять каталог</h1>
+      <p class="rules-intro">
+        Сайт — <strong>статика на хостинге</strong>. Инструмент <strong>pars (SEO-комбайн)</strong> — отдельно, на вашем ПК:
+        им собираете XLS, а на сайт только выкладываете карточку каталога. Файлы РК клиенту отдаёте вручную после оплаты
+        (почта / Telegram / облако).
+      </p>
+
+      <section class="rules-block">
+        <h2>1. Собрать пакет (pars, локально)</h2>
+        <ol>
+          <li>Откройте папку <code>pars</code>, запустите комбайн.</li>
+          <li>Соберите фразы, заголовки, минуса.</li>
+          <li>Вкладка «Директ XLS» → скачайте файл кампании.</li>
+          <li>Файл храните у себя (не обязательно заливать на сайт).</li>
+        </ol>
+      </section>
+
+      <section class="rules-block">
+        <h2>2. Добавить карточку на сайт</h2>
+        <p>Отредактируйте файл <code>data/campaigns.json</code> на хостинге (FTP / файловый менеджер):</p>
+        <pre class="code-block">{
+  "id": 6,
+  "title": "Название для клиента",
+  "sphere": "Сфера / ниша",
+  "description": "Кратко, что внутри пакета",
+  "price": 9900,
+  "preview": "img/campaigns/my-preview.jpg",
+  "active": true,
+  "created_at": "2026-07-22"
+}</pre>
+        <ul>
+          <li><code>id</code> — уникальный номер</li>
+          <li><code>preview</code> — путь к картинке (загрузите JPG/PNG в <code>img/campaigns/</code>)</li>
+          <li><code>active": false</code> — скрыть из каталога</li>
+        </ul>
+      </section>
+
+      <section class="rules-block">
+        <h2>3. Курс (3 500 ₽)</h2>
+        <ul>
+          <li>Уроки: <code>data/private/course.json</code> (закрыто от URL) · лендинг: <code>data/course.json</code></li>
+          <li>Картинки: <code>img/course/</code></li>
+          <li>Кабинет: <code>learn.php</code> + <code>course-api.php</code> (урок по одному, cookie)</li>
+          <li>Оплата ЮKassa: <code>product_type=course</code>, цена 3 500 ₽</li>
+          <li>Доступы: <code>data/private/course-access.json</code></li>
+          <li>Инструкция: <code>data/COURSE-EDIT.md</code></li>
+        </ul>
+      </section>
+
+      <section class="rules-block">
+        <h2>4. Заявки и оплата</h2>
+        <p>В <code>js/config.js</code>:</p>
+        <ul>
+          <li><code>LEADS_EMAIL</code> / <code>LEADS_EMAIL_CC</code> — zakaz@ и info@ (FormSubmit)</li>
+          <li><code>TELEGRAM_USER</code> — ник без @</li>
+          <li><code>PAYMENT_ENABLED</code> — кнопка «Оплатить картой»</li>
+        </ul>
+        <p>ЮKassa: <code>buy.php</code>, <code>webhook.php</code>, ключи в <code>includes/yookassa-config.php</code>. Webhook URL: <code>https://directbeza.ru/webhook.php</code>. Лог: <code>data/payments.json</code>.</p>
+        <p>После оплаты отправляете xlsx клиенту на email.</p>
+      </section>
+
+      <section class="rules-block">
+        <h2>5. Что заливать на хост</h2>
+        <p>Папка сайта <code>directbeza.ru</code>:</p>
+        <ul>
+          <li>HTML + <code>buy.php</code>, <code>webhook.php</code>, <code>success.php</code></li>
+          <li><code>includes/</code>, <code>css/</code>, <code>js/</code>, <code>img/</code>, <code>data/</code>, favicon</li>
+        </ul>
+        <p><strong>Не нужно:</strong> Node, server.js, package.json, папка <code>pars</code>.</p>
+      </section>
+
+      <div class="rules-cta">
+        <a href="catalog.html" class="btn">Открыть каталог</a>
+        <a href="index.html" class="btn btn-outline">На главную</a>
+      </div>
+    </div>
+  </main>
+  <style>
+    .code-block {
+      background: #1a1a1a;
+      color: #f5e6a0;
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+  </style>
+</body>
+</html>

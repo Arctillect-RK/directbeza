@@ -1,0 +1,42 @@
+# deps & build
+node_modules/
+.venv/
+venv/
+__pycache__/
+dist/
+build/
+.next/
+vendor/
+*.pyc
+
+# secrets & local env
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+secrets/
+credentials*
+
+# runtime / browsers / dbs
+browser_data/
+browser_data_edge/
+browser_profiles/
+data/
+*.db
+*.db-journal
+*.db-wal
+*.sqlite
+*.log
+logs/
+
+# media dumps / archives
+*.mp4
+*.rar
+*.zip
+*.7z
+*.exe
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Кампания | ДиректБезАгенств</title>
+  <meta name="description" content="Готовая рекламная кампания Яндекс.Директ — описание и заявка." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+</head>
+<body class="page-catalog">
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Директ<span>БезАгенств</span></a>
+      <div class="nav-wrapper">
+        <nav class="nav" id="nav-menu">
+          <a href="index.html">Главная</a>
+          <a href="course.html">Курс</a>
+          <a href="seokombain.html">Комбайн</a>
+          <a href="catalog.html">Готовые РК</a>
+          <a href="rules.html">Правила</a>
+          <a href="index.html#contacts">Контакты</a>
+        </nav>
+        <a href="catalog.html" class="btn btn-header">← В каталог</a>
+        <button class="menu-toggle" id="mobile-menu-btn" type="button">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="catalog-main">
+    <div class="container">
+      <p class="breadcrumb"><a href="catalog.html">Каталог</a> · <span id="crumbTitle">Кампания</span></p>
+      <div id="campaignError" class="error-banner hidden"></div>
+      <div id="campaignCard" class="campaign-detail hidden">
+        <div class="campaign-detail-media">
+          <img id="cImg" alt="" />
+        </div>
+        <div class="campaign-detail-body">
+          <p class="catalog-card-sphere" id="cSphere"></p>
+          <h1 id="cTitle"></h1>
+          <p class="campaign-detail-desc" id="cDesc"></p>
+          <div class="campaign-detail-meta">
+            <div class="catalog-card-price" id="cPrice"></div>
+            <span class="muted" id="cDate"></span>
+          </div>
+          <ul class="campaign-includes">
+            <li>Файлы структуры для Яндекс.Директ / Коммандера</li>
+            <li>Семантика и минус-фразы по сфере</li>
+            <li>Тексты объявлений</li>
+            <li>Краткая инструкция по загрузке</li>
+          </ul>
+          <div class="hero-actions" style="justify-content:flex-start;margin-top:20px;flex-wrap:wrap;gap:10px;">
+            <button type="button" class="btn" id="cPayBtn">💳 Оплатить картой</button>
+            <button type="button" class="btn btn-outline" id="cOrderBtn">Оставить заявку</button>
+            <a href="catalog.html" class="btn btn-outline">Другие кампании</a>
+          </div>
+          <p class="form-note" style="margin-top:14px;">
+            Онлайн-оплата через ЮKassa — файлы пришлём на email после оплаты.
+            Либо заявка: согласуем детали и способ оплаты.
+            <a href="rules.html">Правила</a>
+            · <a href="mailto:zakaz@directbeza.ru">zakaz@directbeza.ru</a>
+          </p>
+        </div>
+      </div>
+      <div id="campaignLoading" class="catalog-empty">Загрузка…</div>
+    </div>
+  </main>
+
+  <footer id="contacts" class="site-footer">
+    <div class="container">
+      <h3 class="site-footer-title">Контакты</h3>
+      <p class="site-footer-contacts" data-contact-emails></p>
+      <p>
+        Telegram: <a href="https://t.me/devgweb" data-tg-link target="_blank" rel="noopener">@devgweb</a>
+      </p>
+      <p>
+        <a href="rules.html">Правила оплаты</a> · <a href="catalog.html">Каталог</a> · <a href="index.html">На главную</a>
+      </p>
+      <p>© 2026 ДиректБезАгенств</p>
+    </div>
+  </footer>
+
+  <!-- Заявка -->
+  <div class="modal-overlay" id="lead-modal-overlay">
+    <div class="modal-content modal-wide">
+      <button class="modal-close" type="button" onclick="closeLeadModal()">×</button>
+      <h3 id="lead-modal-title">Заявка на готовую кампанию</h3>
+      <p id="lead-modal-sub" style="color:#666;margin:0 0 8px;">Передадим файлы после оплаты</p>
+      <form class="modal-form" id="leadForm">
+        <input type="hidden" id="leadType" value="ready_campaign" />
+        <input type="hidden" id="leadCampaignId" value="" />
+        <input type="hidden" id="leadCampaignTitle" value="" />
+        <div id="leadCampaignInfo" class="lead-campaign-chip hidden"></div>
+        <label class="form-label">Ссылка на сайт</label>
+        <input type="url" id="leadWebsite" placeholder="https://example.ru" />
+        <label class="form-label">Что продвигаем?</label>
+        <textarea id="leadPromote" rows="2" placeholder="Уточните, если нужно"></textarea>
+        <label class="form-label">Город / регион</label>
+        <input type="text" id="leadCity" placeholder="Москва и область" />
+        <label class="form-label">Имя *</label>
+        <input type="text" id="leadName" required />
+        <label class="form-label">Телефон *</label>
+        <input type="tel" id="leadPhone" required />
+        <label class="form-label">Почта *</label>
+        <input type="email" id="leadEmail" required />
+        <p id="leadFormError" class="form-error hidden"></p>
+        <p id="leadFormOk" class="form-ok hidden"></p>
+        <button type="submit" class="btn" style="width:100%;" id="leadSubmitBtn">Отправить заявку</button>
+        <p class="form-note">Согласие с <a href="rules.html" target="_blank">правилами</a>. Копия заявки: zakaz@ / info@directbeza.ru</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Оплата картой -->
+  <div class="modal-overlay" id="pay-modal-overlay">
+    <div class="modal-content modal-wide">
+      <button class="modal-close" type="button" onclick="closePayModal()">×</button>
+      <h3>Оплата готовой кампании</h3>
+      <p style="color:#666;margin:0 0 8px;">Безопасная оплата картой через ЮKassa</p>
+      <form class="modal-form" id="payForm">
+        <input type="hidden" id="payCampaignId" value="" />
+        <input type="hidden" id="payCampaignTitle" value="" />
+        <input type="hidden" id="payPrice" value="" />
+        <div id="payCampaignInfo" class="lead-campaign-chip"></div>
+        <p class="pay-sum">К оплате: <strong id="payPriceLabel"></strong></p>
+        <label class="form-label">Имя *</label>
+        <input type="text" id="payName" required placeholder="Как к вам обращаться" />
+        <label class="form-label">Телефон *</label>
+        <input type="tel" id="payPhone" required placeholder="+7 …" />
+        <label class="form-label">Почта для файлов *</label>
+        <input type="email" id="payEmail" required placeholder="email@domain.ru" />
+        <label class="form-label">Сайт (необязательно)</label>
+        <input type="url" id="payWebsite" placeholder="https://example.ru" />
+        <p id="payFormError" class="form-error hidden"></p>
+        <p id="payFormOk" class="form-ok hidden"></p>
+        <button type="submit" class="btn" style="width:100%;" id="paySubmitBtn">Оплатить картой</button>
+        <p class="form-note">Согласие с <a href="rules.html" target="_blank">правилами</a>. Чек и файлы — на указанный email.</p>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/catalog-data.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/campaign.js"></script>
+</body>
+</html>
