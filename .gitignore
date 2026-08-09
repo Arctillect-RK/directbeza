@@ -40,3 +40,12 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# certs & backups
+*.key
+*.pem
+*.crt
+*.p12
+*.bak*
+_removed_ssl*
+
